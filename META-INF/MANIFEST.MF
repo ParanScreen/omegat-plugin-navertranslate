@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OmegaT-Plugin: true
+
+Name: kr.pscr.ntplugin.NaverTranslate
+OmegaT-Plugin: MachineTranslator
+

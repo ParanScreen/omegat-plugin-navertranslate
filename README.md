@@ -39,7 +39,11 @@ naver.api.secret=YOURAPISECRET
 이 소프트웨어는 GNU GPLv2를 따르는 자유 소프트웨어입니다. 또한 특별한 예외사항으로, 본 프로그램의 저작권자는 이 프로그램을 [JSON-java License](https://github.com/stleary/JSON-java/blob/master/LICENSE) 하에 공개된 [JSON-java Library](https://github.com/stleary/JSON-java)의 표준 릴리즈에 포함된 코드와 결합하는 것을 허가합니다. 귀하는 이러한 시스템을 이 프로그램에 대한 GNU GPL의 조항과, 그 밖의 관계된 코드의 라이센스에 따라 복사하거나 배포할 수 있습니다. 자세한 내용을 열람하려면 LICENSE 파일을 참조해 주십시오.
 
 ### 사용법
-0. [NAVER Developers](https://developers.naver.com/register?defaultScope=translate) 웹 사이트에서 API 키/시크릿을 발급받습니다. (NAVER 계정 필요)
+0. [NAVER Developers](https://developers.naver.com/apps/#/register?api=ppg_n2mt) 웹 사이트에서 API 키/시크릿을 발급받습니다. (NAVER 계정 필요)
+* 네이버 ID로 로그인
+* [애플리케이션 등록](https://developers.naver.com/apps/#/register)에서 임의의 애플리케이션 이름과 사용 API (Papago 번역) 선택
+* "비로그인 오픈 API 서비스 환경"에서 "WEB 설정" 선택, http://127.0.0.1 이라고 입력한 뒤 "등록하기"
+* "애플리케이션 정보" 메뉴에서 "Client ID" (=API 키), "Client Secret" (=API 시크릿) 확인 가능
 
 #### Apple macOS
 1. /Applications/OmegaT.app/Contents/Java/plugins 디렉토리에 플러그인 파일을 복사합니다. 

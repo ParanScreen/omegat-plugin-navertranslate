@@ -16,7 +16,7 @@ import org.json.*;
 
 /*
  * Naver Translate plugin for OmegaT
- * based on Yandex Translate plugin by oisee https://sourceforge.net/projects/NaverTranslatepluginforomegat/
+ * based on Yandex Translate plugin by oisee https://sourceforge.net/projects/YandexTranslatepluginforomegat/
  * licensed under GNU GPLv2 and modified by ParanScreen
  */
 
@@ -31,7 +31,7 @@ public class NaverTranslate extends BaseTranslate {
 
     protected static final String USER_AGENT = "Mozilla/5.0";
 
-    protected static final String GT_URL = "https://openapi.naver.com/v1/language/translate";
+    protected static final String GT_URL = "https://openapi.naver.com/v1/papago/n2mt";
 
     protected static Map<String, String> translationCache = new HashMap<String, String>();
 
@@ -42,7 +42,6 @@ public class NaverTranslate extends BaseTranslate {
     protected String getPreferenceName() {
         return "allow_naver_translate";
     }
-    //POST  -   https://openapi.naver.com/v1/language/translate     JSON
 
     public String getName() {
         if (mvNaverKey == null || mvNaverSecret == null) {
@@ -62,15 +61,33 @@ public class NaverTranslate extends BaseTranslate {
         String lvTargetLang = tLang.getLanguageCode().substring(0, 2).toLowerCase();
         String result = "";
 
-        if(lvTargetLang.equals("zh")) lvTargetLang = "zh-CN";
 
-        String lvShorText = text.length() > 10000 ? text.substring(0, 9999) + "…" : text;
+        if(lvSourceLang.equals("zh")) {
+            //OmegaT의 중국어에는 zh, zh-CN, zh-HK, zh-TW가 있고 Papago 지원 중국어 코드는 zh-CN(간) or zh-TW(번)의 2가지임
+            String strSLangCode = sLang.getLanguageCode();
+            if(strSLangCode.equalsIgnoreCase("zh"))
+                lvTargetLang = "zh-CN";
+            else if(strSLangCode.equalsIgnoreCase("zh-HK"))
+                lvTargetLang = "zh-TW";
+            else lvTargetLang = strSLangCode;
+        }
+
+        if(lvTargetLang.equals("zh")) {
+            String strTLangCode = tLang.getLanguageCode();
+            if(strTLangCode.equalsIgnoreCase("zh"))
+                lvTargetLang = "zh-CN";
+            else if(strTLangCode.equalsIgnoreCase("zh-HK"))
+                lvTargetLang = "zh-TW";
+            else lvTargetLang = strTLangCode;
+        }
+
+        //Papago API 제한 1회 요청당 최대 5000자
+        String lvShorText = text.length() > 5000 ? text.substring(0, 4999) + "…" : text;
         String lvCacheText = lvSourceLang + '-' + lvTargetLang + lvShorText;
         String lvCachedResult = translationCache.get(lvCacheText);
         if (lvCachedResult != null) {
             return lvCachedResult;
         }
-
 
         Map<String, String> parms = new TreeMap<String, String>();
         parms.put("source", lvSourceLang);
